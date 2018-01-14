@@ -1,40 +1,47 @@
-function TextCell(text) {
-    this.text = text.split("\n");
-}
-
-TextCell.prototype.minWidth = function() {
-    return this.text.reduce(function(width, line) {
-    return Math.max(width, line.length);
-    }, 0);
-}
-
-TextCell.prototype.minHeight = function() {
-    return this.text.length;
-}
-
-TextCell.prototype.draw = function(width, height) {
-    let result = [];
-
-    for (var i = 0; i < height; i++) {
-        let line = this.text[i] || "";
-        result.push(line + repeat(" ", width - line.length));
+function logFive(sequence) {
+    for (let i = 0; i < 5; i++) {
+        if(!sequence.next()) {
+            break;
+        }
+        console.log(sequence.current());
     }
-return result;
 }
 
-function StretchCell(inner, width, height) {
-    this.inner = inner;
-    this.width = width;
-    this.height = height;
+function ArraySeq(array) {
+    this.pos = -1;
+    this.array = array;
 }
 
-StretchCell.prototype.minWidth = function() {
-    return Math.max(this.width, this.inner.minWidth);
+ArraySeq.prototype.next = function() {
+    if(this.pos >= this.array.length - 1) {
+        return false;
+    }
+
+    this.pos++;
+    return true;
 }
 
-StretchCell.prototype.minHeight = function() {
-    
+ArraySeq.prototype.current = function() {
+    return this.array[this.pos];
 }
 
-var sc = new StretchCell(new TextCell("abc"), 1, 2);
-console.log(sc.minWidth());
+function RangeSeq(from, to) {
+    this.pos = from - 1;
+    this.to = to;
+}
+
+RangeSeq.prototype.next = function() {
+    if (this.pos >= this.to) {
+        return false;
+    }
+
+    this.pos++;
+    return true;
+}
+
+RangeSeq.prototype.current = function() {
+    return this.pos;
+}
+
+logFive(new ArraySeq([1, 2]));
+logFive(new RangeSeq(100, 1000));
