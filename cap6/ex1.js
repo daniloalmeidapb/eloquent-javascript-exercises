@@ -1,6 +1,3 @@
-function getSum(total, num) {
-    return total + num;
-}
 function myFunction(numbers) {
     return numbers.reduce((total, num) => total + num, 0);
 }
