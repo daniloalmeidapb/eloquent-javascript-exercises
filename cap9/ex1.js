@@ -17,30 +17,16 @@ function verify(regexp, yes, no) {
     });
 }
 
-verify(/.../, 
-    ["my car", "bad cats"], 
-    ["camper", "high art"]);
+verify(/ca[rt]/, ["my car", "bad cats"], ["camper", "high art"]);
 
-verify(/.../,
-        ["pop culture", "mad props"],
-        ["plop"]);
+verify(/pr?op/, ["pop culture", "mad props"], ["plop"]);
 
-verify(/.../,
-        ["ferret", "ferry", "ferrari"],
-        ["ferrum", "transfer A"]);
+verify(/ferr(et|y|ari)/, ["ferret", "ferry", "ferrari"], ["ferrum", "transfer A"]);
 
-verify(/.../,
-        ["how delicious", "spacious room"],
-        ["ruinous", "consciousness"]);
+verify(/ious\b/, ["how delicious", "spacious room"], ["ruinous", "consciousness"]);
 
-verify(/.../,
-        ["bad punctuation ."],
-        ["escape the dot"]);
+verify(/[.]/, ["bad punctuation ."], ["escape the dot"]);
 
-verify(/.../,
-        ["hottentottententen"],
-        ["no", "hotten totten tenten"]);
+verify(/\w{7}/, ["hottentottententen"], ["no", "hotten totten tenten"]);
 
-verify(/.../,
-        ["red platypus", "wobbling nest"],
-        ["earth bed", "learning ape"]);
+verify(/\b[^\We]+\b/i, ["red platypus", "wobbling nest"], ["earth bed", "learning ape"]);
